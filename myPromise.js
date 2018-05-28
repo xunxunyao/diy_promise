@@ -37,13 +37,13 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
     let self = this;
 
     //executor是异步的话，当then执行时候，状态还没有改变，还是pending
-    if (self === STATUS.PENDING) {
+    if (self.status === STATUS.PENDING) {
         //缓存回调函数，等状态改变之后再执行，直接放在resolve里面就可以了
         self.onResolvedCallbacks.push(function () {
             onFulfilled(self.value);
         });
         self.onRejectedCallbacks.push(function () {
-            onRejected(self.value);
+            onRejected(self.reason);
         });
     }
 
