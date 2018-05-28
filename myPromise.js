@@ -30,7 +30,13 @@ function Promise(executor) {
         }
     }
 
-    executor(resolve, reject);//执行执行器函数
+    //抛错误的时候也是reject
+    try{
+        executor(resolve, reject);//执行执行器函数
+    }catch(e){
+        reject(e)
+    }
+
 }
 
 Promise.prototype.then = function (onFulfilled, onRejected) {
